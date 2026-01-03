@@ -8,13 +8,13 @@ pipeline{
         SCANNER_HOME=tool 'sonar-scanner'
     }
     stages{
-        stage('Cleaning workspace')
-        {
-            steps{
-                cleanWs()
-            }
+        // stage('Cleaning workspace')
+        // {
+        //     steps{
+        //         cleanWs()
+        //     }
 
-        }
+        // }
         stage("checkout git repo")
         {
             steps{
