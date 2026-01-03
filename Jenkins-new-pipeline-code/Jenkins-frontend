@@ -60,7 +60,7 @@ sh''' $SCANNER_HOME/bin/sonar-scanner\
         stage ('Docker push')
         {
             steps{
-withDockerRegistry(credentialsId: 'git-cred', url: 'https://hub.docker.com/repositories/rakshithrpoojary') {
+withDockerRegistry(credentialsId: 'docker-cred', url: 'https://hub.docker.com/repositories/rakshithrpoojary') {
 sh 'docker tag frontend rakshithrpoojary/frontend:${BUILD_NUMBER}'
 sh 'docker push rakshithrpoojary/frontend:${BUILD_NUMBER}'
 }
