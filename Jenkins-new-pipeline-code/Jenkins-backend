@@ -16,10 +16,10 @@ pipeline{
         stage("Sonarqube scann")
         {
             steps{
-                dir('Application-Code/frontend'){
+                dir('Application-Code/backend'){
 
                 withSonarQubeEnv('sonar-cred-main'){
-                sh '''${SCANNER_HOME}/bin/sonar-scanner \
+                sh''' ${SCANNER_HOME}/bin/sonar-scanner \
                 -Dsonar.projectName=todobackend \
                 -Dsonar.projectKey=todobackend'''
                 }
@@ -37,7 +37,7 @@ script{
         stage('Trivy Scann')
         {
             steps{
-                dir('Application-Code/frontend'){
+                dir('Application-Code/backend'){
 
                 sh "trivy fs . > trivyfs.txt"
                 }
@@ -47,7 +47,7 @@ script{
         {
 steps{
 
-    dir('Application-Code/frontend'){
+    dir('Application-Code/backend'){
         sh 'docker build -t backend .'
     }
 }
