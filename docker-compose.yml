@@ -7,7 +7,7 @@ services:
     networks:
       - mern_network
     environment:
-      MONGO_CONN_STR: mongodb://mongo:27017/mydatabase
+      MONGO_CONN_STR: mongodb://admin:admin123@mongodb:27017/mydatabase?authSource=admin
       MONGO_USERNAME: admin
       MONGO_PASSWORD: admin123
       PORT: 4000
