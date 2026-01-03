@@ -4,7 +4,7 @@ pipeline{
         nodejs 'nodejs'
     }
 
-    environments{
+    environment{
         SCANNER_HOME=tool 'sonar-scanner'
     }
     stages{
