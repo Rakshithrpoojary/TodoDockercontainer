@@ -28,8 +28,8 @@ pipeline{
 withSonarQubeEnv('sonar-cred-main')
 {
 sh''' $SCANNER_HOME/bin/sonar-scanner\
--Dsonar-projectname=todo\
--Dsonar-projectkey=todo'''
+-Dsonar.projectName=todo\
+-Dsonar.projectKey=todo'''
 }
 }
             }
@@ -47,20 +47,23 @@ sh''' $SCANNER_HOME/bin/sonar-scanner\
         {
             steps{
                 dir('Application-Code/frontend'){
-                    sh 'trivy fs . ->trivy.txt'
+                    sh 'trivy fs . > trivy.txt'
                 }
             }
         }
         stage('Build Docker Image')
         {
             steps{
+                dir('Application-Code/frontend')
+                {
                 sh'docker build -t frontend .'
+                }
             }
         }
         stage ('Docker push')
         {
             steps{
-withDockerRegistry(credentialsId: 'docker-cred', url: 'https://hub.docker.com/repositories/rakshithrpoojary') {
+withDockerRegistry(credentialsId: 'docker-cred') {
 sh 'docker tag frontend rakshithrpoojary/frontend:${BUILD_NUMBER}'
 sh 'docker push rakshithrpoojary/frontend:${BUILD_NUMBER}'
 }
