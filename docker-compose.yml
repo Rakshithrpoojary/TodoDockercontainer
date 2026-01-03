@@ -20,7 +20,7 @@ services:
     networks:
       - mern_network
     environment:
-      REACT_APP_BACKEND_URL: http://backend:4000
+      REACT_APP_BACKEND_URL: http://backend:4000/tasks
 
   mongodb:
     image: mongo:latest
