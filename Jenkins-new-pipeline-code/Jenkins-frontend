@@ -1,0 +1,71 @@
+pipeline{
+    agent any
+    tools{
+        nodejs 'nodejs'
+    }
+
+    environments{
+        SCANNER_HOME=tool 'sonar-scanner'
+    }
+    stages{
+        stage('Cleaning workspace')
+        {
+            steps{
+                cleanWs()
+            }
+
+        }
+        stage("checkout git repo")
+        {
+            steps{
+                git credentialsId 'git-cred', url:"https://github.com/Rakshithrpoojary/Kubernetsproject.git"
+            }
+        }
+        stage('Sonarqube analysis')
+        {
+            steps {
+                dir('Application-Code/frontend'){
+withSonarQubeEnv('sonar-cred-main')
+{
+sh''' $SCANNER_HOME/bin/sonar-scanner\
+-Dsonar-projectname=todo\
+-Dsonar-projectkey=todo'''
+}
+}
+            }
+        }
+
+        stage('Quality Check')
+        {
+            steps{
+                script{
+                    waitForQualityGate abortPipeline:false,credentialsId:'sonar-cred'
+                }
+            }
+        }
+        stage('Trivy filescan')
+        {
+            steps{
+                dir('Application-Code/frontend'){
+                    sh 'trivy fs . ->trivy.txt'
+                }
+            }
+        }
+        stage('Build Docker Image')
+        {
+            steps{
+                sh'docker build -t frontend .'
+            }
+        }
+        stage ('Docker push')
+        {
+            steps{
+withDockerRegistry(credentialsId: 'git-cred', url: 'https://hub.docker.com/repositories/rakshithrpoojary') {
+sh 'docker tag frontend rakshithrpoojary/frontend:${BUILD_NUMBER}'
+sh 'docker push rakshithrpoojary/frontend:${BUILD_NUMBER}'
+}
+            }
+        }
+
+    }
+}
