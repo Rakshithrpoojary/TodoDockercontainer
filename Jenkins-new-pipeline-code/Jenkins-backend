@@ -65,7 +65,7 @@ sh 'docker push rakshithrpoojary/backend:${BUILD_NUMBER}'
         stage("Deploy backend")
         {
             steps{
-                sh '''docker run  -d --name frontend -p 4000:4000 \
+                sh '''docker run  -d --name backend -p 4000:4000 \
                 rakshithrpoojary/backend:${BUILD_NUMBER}'''
             }
         }
