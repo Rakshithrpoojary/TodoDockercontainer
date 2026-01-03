@@ -1,7 +1,6 @@
 services:
   backend:
-  build:
-    context: ./Application-Code/backend
+    build: ./Application-Code/backend
     # image: rakshithrpoojary/backend:9
     ports:
       - "4000:4000"
@@ -16,8 +15,7 @@ services:
       - mongodb
 
   frontend:
-    build:
-      context: ./Application-Code/frontend
+    build: ./Application-Code/frontend
     # image: rakshithrpoojary/frontend:9
     ports:
       - "3001:3000"
