@@ -27,8 +27,8 @@ pipeline{
                 dir('Application-Code/frontend'){
 withSonarQubeEnv('sonar-cred-main')
 {
-sh''' $SCANNER_HOME/bin/sonar-scanner\
--Dsonar.projectName=todo\
+sh''' $SCANNER_HOME/bin/sonar-scanner \
+-Dsonar.projectName=todo \
 -Dsonar.projectKey=todo'''
 }
 }
