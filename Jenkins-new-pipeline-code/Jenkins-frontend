@@ -72,7 +72,7 @@ sh 'docker push rakshithrpoojary/frontend:${BUILD_NUMBER}'
         stage("Deploy in docker")
         {
             steps{
-                sh '''docker run  -d --name ${BUILD_NUMBER} -p 3000:3000 \
+                sh '''docker run  -d --name frontend -p 3000:3000 \
                 rakshithrpoojary/frontend:${BUILD_NUMBER}'''
             }
         }
